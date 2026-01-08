@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #030014;
+  --foreground: #ffffff;
+  --youthpay-accent: #ccff00;
+  --youthpay-accent-rgb: 204 255 0;
+  --youthpay-pink: #ff00ff;
+  --youthpay-pink-rgb: 255 0 255;
+  --youthpay-danger: #ff2a2a;
+  --youthpay-danger-rgb: 255 42 42;
+  --youthpay-bg: #030014;
+  --youthpay-fg: #ffffff;
+  --youthpay-hero-bg: #030014;
+  --youthpay-hero-fg: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-youthpay-accent: var(--youthpay-accent);
+  --color-youthpay-accent-rgb: var(--youthpay-accent-rgb);
+  --color-youthpay-pink: var(--youthpay-pink);
+  --color-youthpay-pink-rgb: var(--youthpay-pink-rgb);
+  --color-youthpay-danger: var(--youthpay-danger);
+  --color-youthpay-danger-rgb: var(--youthpay-danger-rgb);
+  --color-youthpay-bg: var(--youthpay-bg);
+  --color-youthpay-fg: var(--youthpay-fg);
+  --color-youthpay-hero-bg: var(--youthpay-hero-bg);
+  --color-youthpay-hero-fg: var(--youthpay-hero-fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #030014;
+    --foreground: #ffffff;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }

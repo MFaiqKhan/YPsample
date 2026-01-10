@@ -1,5 +1,5 @@
-import YouthPayLanding from "@/components/YouthPayLanding";
+import YouthPaySinglePage from "@/components/YouthPaySinglePage";
 
 export default function Home() {
-  return <YouthPayLanding />;
+  return <YouthPaySinglePage />;
 }

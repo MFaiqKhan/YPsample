@@ -8,6 +8,7 @@ import PosterHero from "./PosterHero";
 import PosterFeatures from "./PosterFeatures";
 import PosterHowItWorks from "./PosterHowItWorks";
 import PosterWaitlist from "./PosterWaitlist";
+import PosterIntegrations from "./PosterIntegrations";
 import Confetti from "./Confetti"; // Keeping confetti if we want to use it later
 
 export default function YouthPaySinglePage() {
@@ -25,6 +26,7 @@ export default function YouthPaySinglePage() {
                 <PosterHero />
                 <PosterFeatures />
                 <PosterHowItWorks />
+                <PosterIntegrations />
                 <PosterWaitlist />
             </main>
         </div>

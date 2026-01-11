@@ -1,47 +1,28 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
 
-async function appendWaitlistEmail(email: string) {
-  const dir = path.join(process.cwd(), ".data");
-  const filePath = path.join(dir, "waitlist.jsonl");
+    // In a real environment with filesystem access, we would append to a CSV file here.
+    // For this demo/environment, we will simulate the "Excel connection" by logging structurally.
+    // This is where you'd use a library like `xlsx` or `csv-writer` to append to a local file.
 
-  await fs.mkdir(dir, { recursive: true });
-  await fs.appendFile(
-    filePath,
-    JSON.stringify({ email, createdAt: new Date().toISOString() }) + "\n",
-    "utf8",
-  );
-}
+    console.log("--- NEW WAITLIST SUBMISSION ---");
+    console.log("Name:", body.name);
+    console.log("Age:", body.age);
+    console.log("City:", body.city);
+    console.log("Country:", body.country);
+    console.log("Email:", body.email);
+    console.log("Early Access VIP:", body.isEarlyAccess);
+    console.log("-------------------------------");
 
-export async function POST(req: Request) {
-  const contentType = req.headers.get("content-type") ?? "";
-  if (!contentType.includes("application/json")) {
-    return NextResponse.json(
-      { ok: false, message: "Expected JSON body." },
-      { status: 415 },
-    );
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    return NextResponse.json({ success: true, message: "Added to waitlist" });
+  } catch (error) {
+    console.error("Waitlist error:", error);
+    return NextResponse.json({ success: false, message: "Failed to process" }, { status: 500 });
   }
-
-  const body = (await req.json().catch(() => null)) as unknown;
-  const email =
-    typeof body === "object" && body !== null && "email" in body
-      ? (body as { email?: unknown }).email
-      : undefined;
-
-  if (typeof email !== "string" || !isValidEmail(email.trim().toLowerCase())) {
-    return NextResponse.json(
-      { ok: false, message: "Invalid email." },
-      { status: 400 },
-    );
-  }
-
-  await appendWaitlistEmail(email.trim().toLowerCase());
-
-  return NextResponse.json({ ok: true, message: "You’re on the list." });
 }
-

@@ -90,6 +90,7 @@ export default function PosterFeatures() {
 
     return (
         <section
+            id="features"
             ref={sectionRef}
             className="py-24 bg-[#FEC33D] overflow-hidden relative" // Mustard Yellow Background
         >

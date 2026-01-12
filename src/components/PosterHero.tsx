@@ -109,10 +109,9 @@ export default function PosterHero() {
                         </span>
                     </div>
 
-                    <h1 className="text-[10vw] md:text-[7vw] leading-[0.9] font-black text-black tracking-tighter mix-blend-normal whitespace-nowrap">
-                        <span className="hero-text-char inline-block">MAKE</span><br className="md:hidden" />
-                        <span className="hero-text-char inline-block text-white drop-shadow-[4px_4px_0px_#000]"> MONEY</span><br />
-                        <span className="hero-text-char inline-block">MOVES</span>
+                    <h1 className="text-[3vw] md:text-[3vw] leading-[0.9] font-black text-black tracking-tighter mix-blend-normal uppercase max-w-4xl mx-auto">
+                        changing the way <br />
+                        <span className="text-white drop-shadow-[4px_4px_0px_#000]">minors pay</span>
                     </h1>
                 </div>
 
@@ -127,21 +126,11 @@ export default function PosterHero() {
                             style={{ transform: 'none' }}
                             className="hero-phone-main w-full h-auto drop-shadow-[0px_30px_60px_rgba(0,0,0,0.6)] rounded-[2.5rem] md:rounded-[3rem] z-10 relative"
                         />
-
-                        {/* Floating Sticker: Aurafarming */}
-                        <div className="absolute top-[15%] -left-4 md:-left-16 rotate-[-12deg] bg-white text-black p-2 md:p-4 font-black text-[10px] md:text-base uppercase border-2 border-black shadow-[3px_3px_0px_#000] animate-float z-20">
-                            Aurafarming<br />Daily 💅
-                        </div>
-
-                        {/* Floating Sticker: Slay */}
-                        <div className="absolute bottom-[30%] -right-4 md:-right-16 rotate-[8deg] bg-[#FF2E00] text-white p-2 md:p-4 font-black text-[10px] md:text-base uppercase border-2 border-black shadow-[3px_3px_0px_#000] animate-float z-20" style={{ animationDelay: "1s" }}>
-                            Slay Your<br />Finances
-                        </div>
                     </div>
                 </div>
 
                 {/* Layer 3: CTA (Overlapping Phone) */}
-                <div className="hero-cta-group relative z-40 mt-[-50px] md:mt-[-80px] pb-8">
+                <div className="hero-cta-group relative z-40 mt-8 pb-8">
                     <p className="text-black text-sm md:text-lg font-bold mb-4 max-w-xs md:max-w-md mx-auto drop-shadow-sm bg-white/80 px-2 py-1 backdrop-blur-sm rounded border-2 border-black transform rotate-1">
                         From Gen Z, For Gen Z. <br className="hidden md:block" />Ready to start Aurafarming?
                     </p>

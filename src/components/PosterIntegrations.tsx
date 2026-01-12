@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -20,22 +20,17 @@ export default function PosterIntegrations() {
                     LOVE IT.
                 </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto font-medium">
-                    Connect your existing bank or your school ID.
-                    We are bringing the top Karachi schools on board.
+                    Bank and YouthPay will be linked. Schools are just distribution channels.
                 </p>
             </div>
 
-            {/* The "Link" Visual - Inspired by the user image */}
+            {/* The "Link" Visual - Cycling Banks */}
             <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-20">
-                {/* Bank Side */}
-                <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-purple-900 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 hover:rotate-0 transition-transform">
-                        <span className="text-white font-bold text-xs text-center">MEEZAN<br />BANK</span>
-                    </div>
-                </div>
+                {/* Bank Side - Cycling Carousel */}
+                <BankCarousel />
 
-                {/* Arrow */}
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md text-[#FF2E00]">
+                {/* Arrow - Flowy Animation */}
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md text-[#FF2E00] animate-flow-arrow relative z-10">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4} stroke="currentColor" className="w-8 h-8">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
@@ -69,7 +64,57 @@ export default function PosterIntegrations() {
                 .animate-marquee-fast {
                     animation: marquee 40s linear infinite;
                 }
+                @keyframes flowArrow {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(10px); }
+                }
+                .animate-flow-arrow {
+                    animation: flowArrow 2s ease-in-out infinite;
+                }
              `}</style>
         </section>
+    );
+}
+
+function BankCarousel() {
+    const banks = [
+        { name: "Meezan Bank", logo: "/meezan-bank-logo.png" },
+        { name: "HBL", logo: "/HBL-logo.png" },
+        { name: "Bank Alfalah", logo: "/bank-alfalah-logo.png" },
+        { name: "UBL", logo: "/png-transparent-ubl-united-bank-limited-hd-logo.png" },
+        { name: "Allied Bank", logo: "/allied-bank-limited-logo.png" },
+        { name: "Askari Bank", logo: "/Askari-Bank-Logo.png" },
+    ];
+
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIndex((prev: number) => (prev + 1) % banks.length);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [banks.length]);
+
+    const current = banks[index];
+
+    return (
+        <div className="flex items-center gap-4">
+            <div key={index} className={`w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 transition-all duration-500 animate-fade-in-up p-2`}>
+                <img
+                    src={current.logo}
+                    alt={current.name}
+                    className="w-full h-full object-contain"
+                />
+            </div>
+            <style jsx>{`
+                @keyframes fadeInUp {
+                    from { opacity: 0; transform: translateY(10px) rotate(-3deg); }
+                    to { opacity: 1; transform: translateY(0) rotate(-3deg); }
+                }
+                .animate-fade-in-up {
+                    animation: fadeInUp 0.5s ease-out forwards;
+                }
+            `}</style>
+        </div>
     );
 }

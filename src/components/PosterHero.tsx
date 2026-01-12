@@ -164,7 +164,7 @@ export default function PosterHero() {
                 <div className="whitespace-nowrap animate-marquee">
                     {[...Array(10)].map((_, i) => (
                         <span key={i} className="text-white font-black text-xl md:text-3xl px-8 uppercase tracking-widest">
-                            INFINITY AURA <span className="text-[#FEC33D]">///</span> GEN Z BANKING <span className="text-[#FEC33D]">///</span> SLAY THE PAY <span className="text-[#FEC33D]">///</span>
+                            INFINITY AURA <span className="text-[#FEC33D">///</span> GEN Z BANKING <span className="text-[#FEC33D">///</span> SLAY THE PAY <span className="text-[#FEC33D">///</span>
                         </span>
                     ))}
                 </div>

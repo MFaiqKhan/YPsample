@@ -1,138 +1,166 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const STEPS = [
     {
         id: "01",
-        title: "Parent Funds Wallet",
-        desc: "Parents add money to their teen's YouthPay digital wallet securely.",
-        icon: "💳",
-        color: "bg-[#2B00FF]", // Blue
-        text: "text-white"
+        title: "Track",
+        desc: "Parents add money to their teen's YouthPay digital wallet securely. Instant peace of mind.",
+        image: "/howitworks1.png",
+        color: "text-[#2B00FF]", // Blue
+        bgColor: "bg-blue-50"
     },
     {
         id: "02",
-        title: "Scan QR Code",
-        desc: "Teen scans vendor QR code at canteen or shop for instant payment.",
-        icon: "📸",
-        color: "bg-[#FEC33D]", // Yellow
-        text: "text-black"
+        title: "Scan",
+        desc: "Teen scans vendor QR code at canteen or shop for instant payment. No cash, no hassle.",
+        image: "/howitworks2.png",
+        color: "text-[#FEC33D]", // Yellow
+        bgColor: "bg-yellow-50"
     },
     {
         id: "03",
-        title: "Instant Transfer",
-        desc: "Funds move securely from student wallet to vendor wallet instantly.",
-        icon: "⚡",
-        color: "bg-[#FF2E00]", // Red/Orange
-        text: "text-white"
+        title: "Transfer",
+        desc: "Funds move securely from student wallet to vendor wallet instantly. Fast and secure.",
+        image: "/howitworks3.png",
+        color: "text-[#FF2E00]", // Red/Orange
+        bgColor: "bg-red-50"
     },
     {
         id: "04",
-        title: "Track & Learn",
-        desc: "Parents monitor spending; teens learn money management in real-time.",
-        icon: "📊",
-        color: "bg-black",
-        text: "text-white"
+        title: "Reflect",
+        desc: "See where your money is going. Gain insights with detailed reports.",
+        image: "/howitworks4.png",
+        color: "text-[#10B981]", // Green
+        bgColor: "bg-green-50"
     }
 ];
 
 export default function PosterHowItWorks() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [activeStep, setActiveStep] = useState(0);
+
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        // Staggered entrance for cards
-        gsap.from(".step-card", {
-            y: 100,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: "#how-it-works-grid",
-                start: "top 80%",
+        const section = sectionRef.current;
+        const totalSteps = STEPS.length;
+
+        // Pin the section
+        const scrollAnim = ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: `+=${totalSteps * 100}%`, // Scroll distance proportional to steps
+            pin: true,
+            scrub: 0.5,
+            onUpdate: (self) => {
+                // Calculate current step based on scroll progress
+                // self.progress is 0 to 1
+                const stepIndex = Math.min(
+                    totalSteps - 1,
+                    Math.floor(self.progress * totalSteps)
+                );
+                setActiveStep(stepIndex);
             }
         });
 
-        // Connector Line Animation
-        gsap.from(".connector-line", {
-            scaleY: 0,
-            transformOrigin: "top",
-            duration: 1.5,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#how-it-works-grid",
-                start: "top 60%",
-                end: "bottom 80%",
-                scrub: true
-            }
-        });
-
+        return () => {
+            scrollAnim.kill();
+        };
     }, []);
 
     return (
-        <section id="how-it-works" className="bg-[#F9FAFB] text-black py-32 relative overflow-hidden">
+        <section
+            ref={sectionRef}
+            id="how-it-works"
+            className="h-screen w-full relative overflow-hidden bg-white text-black"
+        >
+            {/* Background Transitions */}
+            <div className="absolute inset-0 transition-colors duration-700 ease-in-out">
+                <div className={`absolute inset-0 opacity-30 transition-colors duration-700 ${STEPS[activeStep].bgColor}`} />
+            </div>
 
-            {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FEC33D]/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#2B00FF]/5 rounded-full blur-3xl pointer-events-none translate-y-1/2 -translate-x-1/2" />
+            <div ref={containerRef} className="container-custom h-full relative z-10 flex flex-col">
 
-            <div className="container-custom relative z-10">
-
-                {/* Header */}
-                <div className="text-center mb-20">
-                    <span className="bg-[#FF2E00] text-white px-6 py-2 text-sm font-bold uppercase tracking-widest inline-block mb-6 rounded-full shadow-lg">
+                {/* Header: Compact and Fixed at Top */}
+                <div className="flex-none pt-24 md:pt-28 pb-4 md:pb-8 text-center z-20">
+                    <span className="inline-block py-1.5 px-4 rounded-full bg-white/80 backdrop-blur-sm border border-black/5 text-[10px] md:text-xs font-bold tracking-widest uppercase text-gray-500 mb-3 shadow-sm">
                         The Workflow
                     </span>
-                    <h2 className="text-5xl md:text-7xl font-black text-black tracking-tight leading-none mb-6">
-                        Seamless.<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2B00FF] to-[#FF2E00]">
-                            Secure. Simple.
-                        </span>
+                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black">
+                        How It Works
                     </h2>
                 </div>
 
-                {/* Steps Grid */}
-                <div id="how-it-works-grid" className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Content Area: Fills remaining space */}
+                <div className="flex-grow flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-16 w-full max-h-[60vh] md:max-h-[65vh]">
 
-                    {/* Connecting Line (Desktop) */}
-                    <div className="hidden lg:block absolute top-[60px] left-0 right-0 h-1 bg-gray-200 z-0">
-                        <div className="connector-line h-full w-full bg-gradient-to-r from-[#2B00FF] via-[#FEC33D] to-[#FF2E00] origin-left scale-x-0" />
-                        {/* TODO: FIX ANIMATION ABOVE TO SCALE X instead of Y for horizontal line if I want horizontal fill */}
+                    {/* LEFT: IMAGE DISPLAY */}
+                    <div className="w-full lg:w-1/2 h-[35vh] md:h-full relative flex items-center justify-center">
+                        {STEPS.map((step, i) => (
+                            <div
+                                key={i}
+                                className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out transform p-4
+                                    ${activeStep === i
+                                        ? 'opacity-100 translate-y-0 scale-100 rotate-0'
+                                        : activeStep > i
+                                            ? 'opacity-0 -translate-y-10 scale-95 -rotate-2'
+                                            : 'opacity-0 translate-y-10 scale-95 rotate-2'
+                                    }
+                                `}
+                            >
+                                <img
+                                    src={step.image}
+                                    alt={step.title}
+                                    className="max-h-full max-w-full object-contain drop-shadow-2xl rounded-2xl md:rounded-3xl shadow-black/10"
+                                />
+                            </div>
+                        ))}
                     </div>
 
-                    {STEPS.map((step, i) => (
-                        <div key={i} className="step-card group relative z-10">
-                            {/* Card Container */}
-                            <div className="bg-white rounded-[2rem] p-8 h-full border border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 hover:-translate-y-2">
-
-                                {/* Number Badge */}
-                                <div className="absolute -top-6 left-8">
-                                    <div className={`w-12 h-12 flex items-center justify-center rounded-xl font-black text-xl shadow-lg ${step.color} ${step.text}`}>
-                                        {step.id}
-                                    </div>
+                    {/* RIGHT: TEXT DISPLAY */}
+                    <div className="w-full lg:w-1/2 h-[20vh] md:h-full relative flex flex-col items-center lg:items-start text-center lg:text-left justify-center px-4">
+                        {STEPS.map((step, i) => (
+                            <div
+                                key={i}
+                                className={`absolute inset-0 flex flex-col justify-center transition-all duration-500 ease-out
+                                    ${activeStep === i
+                                        ? 'opacity-100 translate-x-0 blur-0'
+                                        : 'opacity-0 translate-x-8 blur-sm'
+                                    }
+                                `}
+                            >
+                                <div className={`text-5xl md:text-7xl font-black mb-2 md:mb-4 ${step.color} opacity-20`}>
+                                    {step.id}
                                 </div>
-
-                                {/* Icon Area */}
-                                <div className="mt-6 mb-6">
-                                    <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                                        {step.icon}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <h3 className="text-2xl font-black mb-3 leading-tight">
+                                <h3 className="text-3xl md:text-5xl font-black mb-3 md:mb-5 text-black">
                                     {step.title}
                                 </h3>
-                                <p className="text-gray-500 font-medium leading-relaxed">
+                                <p className="text-base md:text-xl font-medium text-gray-600 max-w-md mx-auto lg:mx-0 leading-relaxed">
                                     {step.desc}
                                 </p>
                             </div>
-                        </div>
+                        ))}
+                    </div>
+
+                </div>
+
+                {/* Footer: Progress Indicators */}
+                <div className="flex-none pb-8 md:pb-12 flex justify-center gap-3">
+                    {STEPS.map((_, i) => (
+                        <div
+                            key={i}
+                            className={`h-1.5 md:h-2 rounded-full transition-all duration-300
+                                ${activeStep === i ? 'w-8 md:w-12 bg-black' : 'w-1.5 md:w-2 bg-gray-300'}
+                            `}
+                        />
                     ))}
                 </div>
+
             </div>
         </section>
     );

@@ -105,7 +105,7 @@ export default function PosterFeatures() {
                         The People's<br />Platform
                     </h2>
                     <div className="inline-block bg-black text-white text-xl md:text-2xl font-bold px-4 py-2 transform -rotate-2">
-                        FOR THE STUDENTS, BY THE STUDENTS
+                        FROM GEN Z FOR GEN Z
                     </div>
                 </div>
 
@@ -146,7 +146,9 @@ export default function PosterFeatures() {
                 </div>
 
                 <div className="mt-20 text-center">
-                    <button className="
+                    <button
+                        onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+                        className="
                         group relative inline-block
                         focus:outline-none focus:ring
                     ">
